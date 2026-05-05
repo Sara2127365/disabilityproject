@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070495680802",
+    "project_id": "disability-b72ac",
+    "storage_bucket": "disability-b72ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070495680802:android:da9bfd3ca3f1c46576bd7b",
+        "android_client_info": {
+          "package_name": "com.example.disability"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlchlBq5bSpzdc0Apzc54fZrThxgU1pxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
