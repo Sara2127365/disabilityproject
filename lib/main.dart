@@ -1,4 +1,6 @@
 import 'package:disability/features/auth/sign_in/sign_in.dart';
+import 'package:disability/features/create_request/create_request_screen.dart';
+import 'package:disability/features/nearby_donors/nearby_donors_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,22 +27,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home:SplashScreen(),
-    routes:
-    {
-      '/onboarding': (context) => OnboardingScreen(),
-      '/signin' : (context) => BlocProvider(
-          create : (context) => AuthCubit(),
-          child: SignInScreen()),
-      '/signup' : (context) => BlocProvider(
-          create : (context) => AuthCubit(),
-          child: SignUpScreen()),
-      '/home' : (context) => HomeScreen(),
 
-    }
-      );
+      debugShowCheckedModeBanner: false,
 
+      home: const NearbyDonorsScreen(),
+
+      routes: {
+
+        '/onboarding': (context) =>
+            const OnboardingScreen(),
+
+        '/signin': (context) =>
+            BlocProvider(
+              create: (context) => AuthCubit(),
+              child: const SignInScreen(),
+            ),
+
+        '/signup': (context) =>
+            BlocProvider(
+              create: (context) => AuthCubit(),
+              child: const SignUpScreen(),
+            ),
+
+        '/home': (context) =>
+            const HomeScreen(),
+
+        '/createRequest': (context) =>
+            const CreateRequestScreen(),
+
+        '/nearbyDonors': (context) =>
+            const NearbyDonorsScreen(),
+      },
+    );
   }
 }
