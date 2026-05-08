@@ -5,7 +5,11 @@ import 'package:disability/features/home/home_screen.dart';
 import 'package:disability/features/notifications/notifications_screen.dart';
 import 'package:disability/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:disability/features/nearby_donors/nearby_donors_screen.dart';
+import 'package:disability/features/nearby_donors/nearby_donors_screen.dart';
+import 'package:disability/features/request_details/request_details_screen.dart';
+import 'package:disability/features/request_details/request_details_screen.dart';
+import 'package:disability/features/request_details/request_details_screen.dart';
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
 
@@ -16,11 +20,11 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
-    HomeScreen(),
-    CreateRequestScreen(),
-    EmergencyScreen(),
-    NotificationsScreen(),
-    ProfileScreen(),
+      HomeScreen(),
+      CreateRequestScreen(),
+      EmergencyScreen(),
+      NotificationsScreen(),
+      ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

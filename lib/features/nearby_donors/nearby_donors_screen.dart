@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../request_details/request_details_screen.dart';
+import '../request_details/request_details_screen.dart';
 
 class NearbyDonorsScreen extends StatelessWidget {
   const NearbyDonorsScreen({super.key});
@@ -703,30 +705,47 @@ class DonorCard extends StatelessWidget {
               const SizedBox(
                   width: 10),
 
-              Container(
+              InkWell(
 
-                padding:
-                    const EdgeInsets
-                        .all(12),
+                onTap: () {
 
-                decoration:
-                    BoxDecoration(
+                  Navigator.push(
 
-                  color: const Color(
-                    0xffD8F3DC,
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (context) =>
+                           RequestDetailsScreen(),
+                    ),
+                  );
+                },
+
+                child: Container(
+
+                  padding:
+                      const EdgeInsets
+                          .all(12),
+
+                  decoration:
+                      BoxDecoration(
+
+                    color: const Color(
+                      0xffD8F3DC,
+                    ),
+
+                    borderRadius:
+                        BorderRadius
+                            .circular(
+                      12,
+                    ),
                   ),
 
-                  borderRadius:
-                      BorderRadius
-                          .circular(
-                    12,
+                  child: const Icon(
+                    Icons.info_outline,
+                    color:
+                        primaryGreen,
                   ),
-                ),
-
-                child: const Icon(
-                  Icons.info_outline,
-                  color:
-                      primaryGreen,
                 ),
               ),
             ],
