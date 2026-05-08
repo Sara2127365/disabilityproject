@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 
       debugShowCheckedModeBanner: false,
 
-      home: const NearbyDonorsScreen(),
+      home: SplashScreen(),
 
       routes: {
 

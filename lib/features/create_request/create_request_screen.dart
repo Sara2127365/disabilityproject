@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../core/styles/styles.dart';
 import '../auth/widgets/button_custom.dart';
 import '../auth/widgets/custom_text_field.dart';
+
 class CreateRequestScreen extends StatefulWidget {
   const CreateRequestScreen({super.key});
 
@@ -18,32 +18,44 @@ class _CreateRequestScreenState
       GlobalKey<FormState>();
 
   late TextEditingController patientNameController;
-  late TextEditingController bloodTypeController;
   late TextEditingController hospitalController;
-  late TextEditingController phoneController;
-  late TextEditingController unitsController;
+  late TextEditingController locationController;
   late TextEditingController notesController;
+
+  String selectedBloodType = 'A+';
+
+  int units = 1;
+
+  int selectedPriority = 0;
+
+  static const Color primaryGreen =
+      Color(0xff2E8B57);
 
   @override
   void initState() {
     super.initState();
 
-    patientNameController = TextEditingController();
-    bloodTypeController = TextEditingController();
-    hospitalController = TextEditingController();
-    phoneController = TextEditingController();
-    unitsController = TextEditingController();
-    notesController = TextEditingController();
+    patientNameController =
+        TextEditingController();
+
+    hospitalController =
+        TextEditingController();
+
+    locationController =
+        TextEditingController();
+
+    notesController =
+        TextEditingController();
   }
 
   @override
   void dispose() {
+
     patientNameController.dispose();
-    bloodTypeController.dispose();
     hospitalController.dispose();
-    phoneController.dispose();
-    unitsController.dispose();
+    locationController.dispose();
     notesController.dispose();
+
     super.dispose();
   }
 
@@ -58,139 +70,569 @@ class _CreateRequestScreenState
 
     return Scaffold(
 
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "Donation Request",
-        ),
+      backgroundColor:
+          const Color(0xffF5FFF8),
+
+      bottomNavigationBar: BottomNavigationBar(
+
+        currentIndex: 1,
+
+        selectedItemColor: primaryGreen,
+        unselectedItemColor: Colors.grey,
+
+        onTap: (index) {
+
+          if (index == 1) {
+
+            Navigator.pushNamed(
+              context,
+              '/nearbyDonors',
+            );
+          }
+
+          if (index == 0) {
+
+            Navigator.pushNamed(
+              context,
+              '/home',
+            );
+          }
+        },
+
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bloodtype),
+            label: 'Requests',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emergency),
+            label: 'Emergency',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Alerts',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
 
       body: SafeArea(
+
         child: Padding(
           padding: EdgeInsets.all(width * 0.05),
 
           child: SingleChildScrollView(
+
             child: Form(
               key: _formKey,
 
               child: Column(
+
                 crossAxisAlignment:
                     CrossAxisAlignment.start,
 
                 children: [
 
-                  const Text(
-                    'Create Donation Request',
-                    style:
-                        StylesManager.titleTextStyle,
+                  Row(
+
+                    children: [
+
+                      const CircleAvatar(
+                        radius: 22,
+                        backgroundImage: AssetImage(
+                          'assets/avatar.png',
+                        ),
+                      ),
+
+                      const SizedBox(width: 12),
+
+                      const Expanded(
+                        child: Text(
+                          "Good Morning,\nDonor",
+
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight:
+                                FontWeight.bold,
+                            color: primaryGreen,
+                          ),
+                        ),
+                      ),
+
+                      IconButton(
+                        onPressed: () {},
+
+                        icon: const Icon(
+                          Icons.notifications_none,
+                          color: primaryGreen,
+                        ),
+                      ),
+                    ],
                   ),
 
-                  SizedBox(height: height * 0.015),
+                  SizedBox(height: height * 0.03),
 
                   const Text(
-                    'Fill in the details below to post a blood donation request.',
-                    style:
-                        StylesManager.titleText20Style,
+                    "Post a Request",
+
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight:
+                          FontWeight.bold,
+                      color: primaryGreen,
+                    ),
                   ),
 
-                  SizedBox(height: height * 0.04),
+                  const SizedBox(height: 8),
+
+                  const Text(
+                    "Fill in the details to find a donor immediately.",
+
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+
+                  SizedBox(height: height * 0.03),
+
+                  const Text(
+                    "Patient Name",
+                  ),
+
+                  const SizedBox(height: 8),
 
                   CustomTextFormField(
-                    label: 'Patient Name',
+                    label: 'Enter full name',
                     controller:
                         patientNameController,
                     prefixIcon: Icons.person,
                     fieldType: FieldType.name,
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.025),
 
-                  CustomTextFormField(
-                    label: 'Blood Type',
-                    controller:
-                        bloodTypeController,
-                    prefixIcon:
-                        Icons.bloodtype,
-                    fieldType: FieldType.normal,
+                  Row(
+
+                    children: [
+
+                      Expanded(
+
+                        child: Column(
+
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+
+                          children: [
+
+                            const Text(
+                              "Blood Type",
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            Container(
+
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+
+                              decoration: BoxDecoration(
+
+                                color: Colors.white,
+
+                                border: Border.all(
+                                  color:
+                                      const Color(
+                                    0xffB7E4C7,
+                                  ),
+                                ),
+
+                                borderRadius:
+                                    BorderRadius.circular(
+                                  14,
+                                ),
+                              ),
+
+                              child: DropdownButton(
+
+                                value:
+                                    selectedBloodType,
+
+                                isExpanded: true,
+
+                                underline:
+                                    const SizedBox(),
+
+                                items: [
+
+                                  'A+',
+                                  'A-',
+                                  'B+',
+                                  'B-',
+                                  'O+',
+                                  'O-',
+                                  'AB+',
+                                  'AB-',
+                                ]
+                                    .map(
+                                      (e) =>
+                                          DropdownMenuItem(
+                                        value: e,
+                                        child:
+                                            Text(e),
+                                      ),
+                                    )
+                                    .toList(),
+
+                                onChanged: (value) {
+
+                                  setState(() {
+
+                                    selectedBloodType =
+                                        value!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(width: 16),
+
+                      Expanded(
+
+                        child: Column(
+
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+
+                          children: [
+
+                            const Text(
+                              "Units (Bags)",
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            Container(
+
+                              padding:
+                                  const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 4,
+                              ),
+
+                              decoration: BoxDecoration(
+
+                                color: Colors.white,
+
+                                border: Border.all(
+                                  color:
+                                      const Color(
+                                    0xffB7E4C7,
+                                  ),
+                                ),
+
+                                borderRadius:
+                                    BorderRadius.circular(
+                                  14,
+                                ),
+                              ),
+
+                              child: Row(
+
+                                mainAxisAlignment:
+                                    MainAxisAlignment
+                                        .spaceBetween,
+
+                                children: [
+
+                                  IconButton(
+
+                                    onPressed: () {
+
+                                      if (units >
+                                          1) {
+
+                                        setState(() {
+
+                                          units--;
+                                        });
+                                      }
+                                    },
+
+                                    icon: const Icon(
+                                      Icons.remove,
+                                      color:
+                                          primaryGreen,
+                                    ),
+                                  ),
+
+                                  Text(
+                                    units.toString(),
+
+                                    style:
+                                        const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight:
+                                          FontWeight
+                                              .bold,
+                                    ),
+                                  ),
+
+                                  IconButton(
+
+                                    onPressed: () {
+
+                                      setState(() {
+
+                                        units++;
+                                      });
+                                    },
+
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color:
+                                          primaryGreen,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.025),
+
+                  const Text(
+                    "Priority Level",
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  Container(
+
+                    padding: const EdgeInsets.all(4),
+
+                    decoration: BoxDecoration(
+
+                      color:
+                          const Color(0xffD8F3DC),
+
+                      borderRadius:
+                          BorderRadius.circular(14),
+                    ),
+
+                    child: Row(
+
+                      children: [
+
+                        buildPriorityButton(
+                          "Normal",
+                          0,
+                        ),
+
+                        buildPriorityButton(
+                          "Urgent",
+                          1,
+                        ),
+
+                        buildPriorityButton(
+                          "Emergency",
+                          2,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: height * 0.025),
+
+                  const Text(
+                    "Hospital Search",
+                  ),
+
+                  const SizedBox(height: 8),
 
                   CustomTextFormField(
-                    label: 'Hospital Name',
+                    label:
+                        'Search hospital name',
+
                     controller:
                         hospitalController,
+
                     prefixIcon:
-                        Icons.local_hospital,
-                    fieldType: FieldType.normal,
+                        Icons.search,
+
+                    fieldType:
+                        FieldType.normal,
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.025),
+
+                  const Text(
+                    "Location",
+                  ),
+
+                  const SizedBox(height: 8),
 
                   CustomTextFormField(
-                    label: 'Phone Number',
+                    label:
+                        'Set hospital address',
+
                     controller:
-                        phoneController,
+                        locationController,
+
                     prefixIcon:
-                        Icons.phone,
-                    fieldType: FieldType.normal,
+                        Icons.location_on,
+
+                    fieldType:
+                        FieldType.normal,
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.025),
 
-                  CustomTextFormField(
-                    label: 'Required Units',
-                    controller:
-                        unitsController,
-                    prefixIcon:
-                        Icons.monitor_heart,
-                    fieldType: FieldType.normal,
+                  const Text(
+                    "Additional Details",
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  const SizedBox(height: 8),
 
                   TextFormField(
-                    controller: notesController,
-                    maxLines: 4,
 
-                    decoration: InputDecoration(
-                      hintText: "Additional Notes",
+                    controller:
+                        notesController,
 
-                      border: OutlineInputBorder(
+                    maxLines: 5,
+
+                    decoration:
+                        InputDecoration(
+
+                      filled: true,
+                      fillColor: Colors.white,
+
+                      hintText:
+                          "Include special instructions or notes...",
+
+                      enabledBorder:
+                          OutlineInputBorder(
+
                         borderRadius:
-                            BorderRadius.circular(15),
+                            BorderRadius.circular(
+                          14,
+                        ),
+
+                        borderSide:
+                            const BorderSide(
+                          color:
+                              Color(0xffB7E4C7),
+                        ),
+                      ),
+
+                      focusedBorder:
+                          OutlineInputBorder(
+
+                        borderRadius:
+                            BorderRadius.circular(
+                          14,
+                        ),
+
+                        borderSide:
+                            const BorderSide(
+                          color:
+                              primaryGreen,
+                        ),
                       ),
                     ),
                   ),
 
-                  SizedBox(height: height * 0.05),
+                  SizedBox(height: height * 0.04),
 
-                  Center(
-                    child: PrimaryButton(
-                      text: 'POST REQUEST',
+                  PrimaryButton(
 
-                      onPressed: () {
+                    text: "Post Request",
 
-                        if (_formKey.currentState!
-                            .validate()) {
-
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(
-
-                            const SnackBar(
-                              content: Text(
-                                "Request Posted Successfully",
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                    ),
+                    onPressed: () {},
                   ),
 
-                  SizedBox(height: height * 0.03),
+                  SizedBox(height: height * 0.02),
                 ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildPriorityButton(
+    String text,
+    int index,
+  ) {
+
+    bool isSelected =
+        selectedPriority == index;
+
+    return Expanded(
+
+      child: GestureDetector(
+
+        onTap: () {
+
+          setState(() {
+
+            selectedPriority = index;
+          });
+        },
+
+        child: Container(
+
+          padding:
+              const EdgeInsets.symmetric(
+            vertical: 14,
+          ),
+
+          decoration: BoxDecoration(
+
+            color: isSelected
+                ? Colors.white
+                : Colors.transparent,
+
+            borderRadius:
+                BorderRadius.circular(12),
+          ),
+
+          child: Center(
+
+            child: Text(
+
+              text,
+
+              style: TextStyle(
+
+                fontWeight:
+                    FontWeight.w600,
+
+                color: isSelected
+                    ? primaryGreen
+                    : Colors.grey,
               ),
             ),
           ),
