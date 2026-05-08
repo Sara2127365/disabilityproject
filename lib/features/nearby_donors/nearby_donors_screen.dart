@@ -1,14 +1,14 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class NearbyDonorsScreen extends StatelessWidget {
   const NearbyDonorsScreen({super.key});
 
+  static const Color primaryGreen =
+      Color(0xff2E8B57);
+
   @override
   Widget build(BuildContext context) {
-
-    const Color primaryGreen =
-        Color(0xff2E8B57);
 
     return Scaffold(
 
@@ -28,12 +28,16 @@ class NearbyDonorsScreen extends StatelessWidget {
         ),
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar:
+          BottomNavigationBar(
 
         currentIndex: 1,
 
-        selectedItemColor: primaryGreen,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor:
+            primaryGreen,
+
+        unselectedItemColor:
+            Colors.grey,
 
         onTap: (index) {
 
@@ -54,17 +58,20 @@ class NearbyDonorsScreen extends StatelessWidget {
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.bloodtype),
+            icon:
+                Icon(Icons.bloodtype),
             label: 'Requests',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.emergency),
+            icon:
+                Icon(Icons.emergency),
             label: 'Emergency',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
+            icon:
+                Icon(Icons.notifications),
             label: 'Alerts',
           ),
 
@@ -78,12 +85,14 @@ class NearbyDonorsScreen extends StatelessWidget {
       body: SafeArea(
 
         child: Padding(
-          padding: const EdgeInsets.all(18),
+          padding:
+              const EdgeInsets.all(18),
 
           child: Column(
 
             crossAxisAlignment:
-                CrossAxisAlignment.start,
+                CrossAxisAlignment
+                    .start,
 
             children: [
 
@@ -99,7 +108,8 @@ class NearbyDonorsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(width: 12),
+                  const SizedBox(
+                      width: 12),
 
                   const Expanded(
 
@@ -110,8 +120,10 @@ class NearbyDonorsScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight:
-                            FontWeight.bold,
-                        color: primaryGreen,
+                            FontWeight
+                                .bold,
+                        color:
+                            primaryGreen,
                       ),
                     ),
                   ),
@@ -120,42 +132,56 @@ class NearbyDonorsScreen extends StatelessWidget {
                     onPressed: () {},
 
                     icon: const Icon(
-                      Icons.notifications_none,
-                      color: primaryGreen,
+                      Icons
+                          .notifications_none,
+                      color:
+                          primaryGreen,
                     ),
                   ),
                 ],
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(
+                  height: 25),
 
               Container(
 
                 padding:
-                    const EdgeInsets.symmetric(
+                    const EdgeInsets
+                        .symmetric(
                   horizontal: 14,
                 ),
 
-                decoration: BoxDecoration(
+                decoration:
+                    BoxDecoration(
 
                   color: Colors.white,
 
                   borderRadius:
-                      BorderRadius.circular(14),
+                      BorderRadius
+                          .circular(
+                    14,
+                  ),
 
                   border: Border.all(
-                    color: Color(0xffB7E4C7),
+                    color: const Color(
+                      0xffB7E4C7,
+                    ),
                   ),
                 ),
 
-                child: const TextField(
+                child:
+                    const TextField(
 
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
+                  decoration:
+                      InputDecoration(
+                    border:
+                        InputBorder.none,
 
                     icon: Icon(
                       Icons.search,
-                      color: Colors.grey,
+                      color:
+                          Colors.grey,
                     ),
 
                     hintText:
@@ -164,7 +190,8 @@ class NearbyDonorsScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(
+                  height: 18),
 
               Row(
 
@@ -176,7 +203,8 @@ class NearbyDonorsScreen extends StatelessWidget {
                     true,
                   ),
 
-                  const SizedBox(width: 10),
+                  const SizedBox(
+                      width: 10),
 
                   filterChip(
                     "Distance: 5km",
@@ -184,7 +212,8 @@ class NearbyDonorsScreen extends StatelessWidget {
                     false,
                   ),
 
-                  const SizedBox(width: 10),
+                  const SizedBox(
+                      width: 10),
 
                   filterChip(
                     "Avail",
@@ -194,7 +223,8 @@ class NearbyDonorsScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(
+                  height: 25),
 
               const Text(
 
@@ -208,60 +238,107 @@ class NearbyDonorsScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(
+                  height: 18),
 
               Expanded(
 
-                child: ListView(
+                child: StreamBuilder(
 
-                  children: const [
+                  stream:
+                      FirebaseFirestore
+                          .instance
+                          .collection(
+                              'requests')
+                          .orderBy(
+                            'createdAt',
+                            descending:
+                                true,
+                          )
+                          .snapshots(),
 
-                    DonorCard(
-                      image:
-                          'assets/Sara.png',
-                      name:
-                          "Sarah Jenkins",
-                      bloodType: "A+",
-                      distance:
-                          "1.2 km away",
-                    ),
+                  builder:
+                      (context, snapshot) {
 
-                    SizedBox(height: 18),
+                    if (snapshot
+                            .connectionState ==
+                        ConnectionState
+                            .waiting) {
 
-                    DonorCard(
-                      image:
-                          'assets/Michle.png',
-                      name:
-                          "Michael Chen",
-                      bloodType: "O-",
-                      distance:
-                          "2.8 km away",
-                    ),
+                      return const Center(
+                        child:
+                            CircularProgressIndicator(),
+                      );
+                    }
 
-                    SizedBox(height: 18),
+                    if (!snapshot
+                            .hasData ||
+                        snapshot.data!
+                            .docs
+                            .isEmpty) {
 
-                    DonorCard(
-                      image:
-                          'assets/Elena.png',
-                      name:
-                          "Elena Rodriguez",
-                      bloodType: "B+",
-                      distance:
-                          "4.5 km away",
-                    ),
+                      return const Center(
+                        child: Text(
+                          'No Requests Yet',
+                        ),
+                      );
+                    }
 
-                    SizedBox(height: 18),
+                    final requests =
+                        snapshot
+                            .data!.docs;
 
-                    DonorCard(
-                      image:
-                          'assets/Davide.png',
-                      name:
-                          "David Wilson",
-                      bloodType: "AB+",
-                      distance:
-                          "5.1 km away",
-                    ),
-                  ],
+                    return ListView
+                        .separated(
+
+                      itemCount:
+                          requests.length,
+
+                      separatorBuilder:
+                          (context,
+                                  index) =>
+                              const SizedBox(
+                        height: 18,
+                      ),
+
+                      itemBuilder:
+                          (context,
+                              index) {
+
+                        final data =
+                            requests[
+                                index];
+
+                        return DonorCard(
+
+                          image:
+                              'assets/avatar.png',
+
+                          name: data[
+                              'patientName'],
+
+                          bloodType: data[
+                              'bloodType'],
+
+                          distance:
+                              data[
+                                  'location'],
+
+                          hospital:
+                              data[
+                                  'hospital'],
+
+                          units:
+                              data[
+                                  'units'],
+
+                          priority:
+                              data[
+                                  'priority'],
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ],
@@ -271,14 +348,11 @@ class NearbyDonorsScreen extends StatelessWidget {
     );
   }
 
-  Widget filterChip(
+  static Widget filterChip(
     String text,
     IconData icon,
     bool active,
   ) {
-
-    const Color primaryGreen =
-        Color(0xff2E8B57);
 
     return Container(
 
@@ -292,10 +366,13 @@ class NearbyDonorsScreen extends StatelessWidget {
 
         color: active
             ? primaryGreen
-            : const Color(0xffD8F3DC),
+            : const Color(
+                0xffD8F3DC),
 
         borderRadius:
-            BorderRadius.circular(30),
+            BorderRadius.circular(
+          30,
+        ),
       ),
 
       child: Row(
@@ -339,6 +416,9 @@ class DonorCard extends StatelessWidget {
   final String name;
   final String bloodType;
   final String distance;
+  final String hospital;
+  final int units;
+  final int priority;
 
   const DonorCard({
     super.key,
@@ -346,29 +426,36 @@ class DonorCard extends StatelessWidget {
     required this.name,
     required this.bloodType,
     required this.distance,
+    required this.hospital,
+    required this.units,
+    required this.priority,
   });
+
+  static const Color primaryGreen =
+      Color(0xff2E8B57);
 
   @override
   Widget build(BuildContext context) {
 
-    const Color primaryGreen =
-        Color(0xff2E8B57);
-
     return Container(
 
-      padding: const EdgeInsets.all(14),
+      padding:
+          const EdgeInsets.all(14),
 
       decoration: BoxDecoration(
 
         color: Colors.white,
 
         borderRadius:
-            BorderRadius.circular(18),
+            BorderRadius.circular(
+          18,
+        ),
 
         boxShadow: [
 
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: Colors.grey
+                .shade200,
             blurRadius: 10,
           ),
         ],
@@ -409,13 +496,16 @@ class DonorCard extends StatelessWidget {
                       decoration:
                           BoxDecoration(
 
-                        color: Colors.green,
+                        color:
+                            Colors.green,
 
                         shape:
                             BoxShape.circle,
 
-                        border: Border.all(
-                          color: Colors.white,
+                        border:
+                            Border.all(
+                          color:
+                              Colors.white,
                           width: 2,
                         ),
                       ),
@@ -424,14 +514,16 @@ class DonorCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(width: 14),
+              const SizedBox(
+                  width: 14),
 
               Expanded(
 
                 child: Column(
 
                   crossAxisAlignment:
-                      CrossAxisAlignment.start,
+                      CrossAxisAlignment
+                          .start,
 
                   children: [
 
@@ -443,23 +535,28 @@ class DonorCard extends StatelessWidget {
                           const TextStyle(
                         fontSize: 18,
                         fontWeight:
-                            FontWeight.bold,
+                            FontWeight
+                                .bold,
                       ),
                     ),
 
-                    const SizedBox(height: 4),
+                    const SizedBox(
+                        height: 4),
 
                     Row(
 
                       children: [
 
                         const Icon(
-                          Icons.location_on,
+                          Icons
+                              .location_on,
                           size: 15,
-                          color: Colors.grey,
+                          color:
+                              Colors.grey,
                         ),
 
-                        const SizedBox(width: 3),
+                        const SizedBox(
+                            width: 3),
 
                         Text(
 
@@ -473,6 +570,38 @@ class DonorCard extends StatelessWidget {
                         ),
                       ],
                     ),
+
+                    const SizedBox(
+                        height: 6),
+
+                    Text(
+
+                      hospital,
+
+                      style:
+                          const TextStyle(
+                        color:
+                            Colors.black54,
+                        fontSize: 13,
+                      ),
+                    ),
+
+                    const SizedBox(
+                        height: 4),
+
+                    Text(
+
+                      '$units Blood Bags',
+
+                      style:
+                          const TextStyle(
+                        color:
+                            primaryGreen,
+                        fontWeight:
+                            FontWeight
+                                .w600,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -480,17 +609,24 @@ class DonorCard extends StatelessWidget {
               Container(
 
                 padding:
-                    const EdgeInsets.symmetric(
+                    const EdgeInsets
+                        .symmetric(
                   horizontal: 12,
                   vertical: 10,
                 ),
 
-                decoration: BoxDecoration(
+                decoration:
+                    BoxDecoration(
 
-                  color: primaryGreen,
+                  color: priority == 2
+                      ? Colors.red
+                      : priority == 1
+                          ? Colors.orange
+                          : primaryGreen,
 
                   borderRadius:
-                      BorderRadius.circular(
+                      BorderRadius
+                          .circular(
                     12,
                   ),
                 ),
@@ -510,7 +646,8 @@ class DonorCard extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 14),
+          const SizedBox(
+              height: 14),
 
           Row(
 
@@ -518,23 +655,27 @@ class DonorCard extends StatelessWidget {
 
               Expanded(
 
-                child: ElevatedButton.icon(
+                child:
+                    ElevatedButton.icon(
 
                   style:
-                      ElevatedButton.styleFrom(
+                      ElevatedButton
+                          .styleFrom(
 
                     backgroundColor:
                         primaryGreen,
 
                     padding:
-                        const EdgeInsets.symmetric(
+                        const EdgeInsets
+                            .symmetric(
                       vertical: 14,
                     ),
 
                     shape:
                         RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.circular(
+                          BorderRadius
+                              .circular(
                         12,
                       ),
                     ),
@@ -544,40 +685,48 @@ class DonorCard extends StatelessWidget {
 
                   icon: const Icon(
                     Icons.message,
-                    color: Colors.white,
+                    color:
+                        Colors.white,
                   ),
 
                   label: const Text(
                     "Contact",
 
                     style: TextStyle(
-                      color: Colors.white,
+                      color:
+                          Colors.white,
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(width: 10),
+              const SizedBox(
+                  width: 10),
 
               Container(
 
                 padding:
-                    const EdgeInsets.all(12),
+                    const EdgeInsets
+                        .all(12),
 
-                decoration: BoxDecoration(
+                decoration:
+                    BoxDecoration(
 
-                  color:
-                      const Color(0xffD8F3DC),
+                  color: const Color(
+                    0xffD8F3DC,
+                  ),
 
                   borderRadius:
-                      BorderRadius.circular(
+                      BorderRadius
+                          .circular(
                     12,
                   ),
                 ),
 
                 child: const Icon(
                   Icons.info_outline,
-                  color: primaryGreen,
+                  color:
+                      primaryGreen,
                 ),
               ),
             ],

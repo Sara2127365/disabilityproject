@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../auth/widgets/button_custom.dart';
 import '../auth/widgets/custom_text_field.dart';
@@ -569,7 +570,81 @@ class _CreateRequestScreenState
 
                     text: "Post Request",
 
-                    onPressed: () {},
+                    onPressed: () async {
+
+                      if (_formKey.currentState!
+                          .validate()) {
+
+                        await FirebaseFirestore
+                            .instance
+                            .collection(
+                                'requests')
+                            .add({
+
+                          'patientName':
+                              patientNameController
+                                  .text,
+
+                          'bloodType':
+                              selectedBloodType,
+
+                          'hospital':
+                              hospitalController
+                                  .text,
+
+                          'location':
+                              locationController
+                                  .text,
+
+                          'notes':
+                              notesController
+                                  .text,
+
+                          'units':
+                              units,
+
+                          'priority':
+                              selectedPriority,
+
+                          'createdAt':
+                              DateTime.now(),
+                        });
+
+                        ScaffoldMessenger.of(
+                                context)
+                            .showSnackBar(
+
+                          const SnackBar(
+                            content: Text(
+                              'Request Added Successfully',
+                            ),
+                          ),
+                        );
+
+                        patientNameController
+                            .clear();
+
+                        hospitalController
+                            .clear();
+
+                        locationController
+                            .clear();
+
+                        notesController
+                            .clear();
+
+                        setState(() {
+
+                          selectedBloodType =
+                              'A+';
+
+                          units = 1;
+
+                          selectedPriority =
+                              0;
+                        });
+                      }
+                    },
                   ),
 
                   SizedBox(height: height * 0.02),
