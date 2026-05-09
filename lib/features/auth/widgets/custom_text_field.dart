@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
-enum FieldType { normal, email, password, name, confirmPassword }
+enum FieldType { normal, email, password, name, phoneNumber, blood, location }
 
 class CustomTextFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final TextEditingController? matchController;
+
   final bool isPassword;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
   final FieldType fieldType;
 
+  final bool readOnly;
+  final VoidCallback? onTap;
+
   const CustomTextFormField({
     super.key,
     required this.label,
     required this.controller,
-    this.matchController,
     this.isPassword = false,
     this.prefixIcon,
     this.suffixIcon,
     this.fieldType = FieldType.normal,
+    this.readOnly = false,
+    this.onTap,
   });
 
   String? _validator(String? value) {
@@ -46,9 +50,21 @@ class CustomTextFormField extends StatelessWidget {
         }
         break;
 
-      case FieldType.confirmPassword:
-        if (matchController != null && value != matchController!.text) {
-          return 'Passwords do not match';
+      case FieldType.phoneNumber:
+        if (value.length < 11) {
+          return 'Phone not valid';
+        }
+        break;
+
+      case FieldType.blood:
+        if (value.length > 3) {
+          return 'Blood not valid';
+        }
+        break;
+
+      case FieldType.location:
+        if (value.length < 2) {
+          return 'Location not valid';
         }
         break;
 
@@ -64,6 +80,8 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
+      readOnly: readOnly,
+      onTap: onTap,
       validator: _validator,
       decoration: InputDecoration(
         labelText: label,

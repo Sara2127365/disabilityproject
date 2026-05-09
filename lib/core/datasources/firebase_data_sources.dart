@@ -15,6 +15,7 @@ class FirebaseDataSource {
   Future<void> signIn(
       String email,
       String password,
+      
       ) async {
     await _auth.signInWithEmailAndPassword(
       email: email,
@@ -28,6 +29,9 @@ class FirebaseDataSource {
       String email,
       String password,
       String name,
+      String phone,
+      String location,
+      String blood,
       ) async {
     UserCredential userCredential =
     await _auth
@@ -39,7 +43,7 @@ class FirebaseDataSource {
     await _firestore
         .collection('users')
         .doc(userCredential.user!.uid)
-        .set(UserModel(email: email, name: name) .toMap());
+        .set(UserModel(email: email, name: name,phone:phone,location:location,blood:blood) .toMap());
   }
 
 

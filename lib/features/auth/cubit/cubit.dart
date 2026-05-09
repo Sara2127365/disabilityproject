@@ -19,8 +19,8 @@ class AuthCubit extends Cubit<AuthStates>{
     }
   }
 
-  Future<void> signUp(String email, String password , String name) async{
-    await firebaseDataSource.signUp(email, password, name);
+  Future<void> signUp(String email, String password , String name,String phone,String location,String blood) async{
+    await firebaseDataSource.signUp(email, password, name,phone,location,blood);
     emit(SignUpLoadingStates());
     try{
       emit(SignUpSuccessStates('Success'));

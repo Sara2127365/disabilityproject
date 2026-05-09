@@ -21,9 +21,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: Image.asset('assets/splash.png')),
+      body: Center(child: Column(
+        children: [
+          
+          Image.asset('assets/splash.png'),
+           SizedBox(height: height * 0.03),
+          Text('BloodLink',style: TextStyle(color: Color(0xFF271716),fontSize: 30),),
+          SizedBox(height: height * 0.02),
+          Text('Donate Blood, Save Lives')
+        ],
+      )),
     );
   }
 }

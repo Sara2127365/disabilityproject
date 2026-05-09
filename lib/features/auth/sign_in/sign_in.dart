@@ -1,5 +1,6 @@
 import 'package:disability/features/auth/cubit/cubit.dart';
 import 'package:disability/features/auth/cubit/states.dart';
+import 'package:disability/features/auth/widgets/forget_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,16 +62,28 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      " Welcome \n Back!",
-                      style: StylesManager.titleTextStyle,
+
+                                        Center(
+                      child: Container( width: 60,  height: 60,decoration: BoxDecoration(color: Color(0xFFB7131A),shape: BoxShape.circle), child: const Icon(
+                          Icons.bloodtype,
+                          color:Color(0xFFFFFFFF),
+                          size: 35,
+                        ),),
                     ),
+                    Center(child: Text('BloodLink',style: TextStyle(color: Color(0xFFB7131A),fontSize: 30),)),
+                   SizedBox(height: height * 0.02),
+                    Center(
+                      child: Text(
+                        " Welcome Back",
+                        style: TextStyle(color: Colors.black,fontSize: 30))
+                      ),
+                    
 
                     SizedBox(height: height * 0.02),
 
                     Text(
-                      " Please sign in to \n continue your \n journey.",
-                      style: StylesManager.titleText20Style,
+                      " Log in to continue saving lives.",
+                      style: TextStyle(color: Color(0xFF5B403D),fontSize: 15),
                     ),
 
                     SizedBox(height: height * 0.02),
@@ -78,8 +91,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     CustomTextFormField(
                       label: 'Email Address',
                       controller: emailController,
-                      prefixIcon: Icons.email,
-                      fieldType: FieldType.email,
+                      
+                      fieldType: FieldType.email
                     ),
 
                     SizedBox(height: height * 0.03),
@@ -87,13 +100,27 @@ class _SignInScreenState extends State<SignInScreen> {
                     CustomTextFormField(
                       label: 'Password',
                       controller: passwordController,
-                      prefixIcon: Icons.lock,
+                    suffixIcon: Icon(Icons.visibility),
                       isPassword: true,
                       fieldType: FieldType.password,
                     ),
 
                     SizedBox(height: height * 0.03),
-
+                    Align(
+  alignment: Alignment.centerRight,
+  child: TextButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ForgotPasswordScreen(),
+        ),
+      );
+    },
+    child: const Text("Forgot Password?",style: TextStyle(color: Color(0xFFB7131A)),),
+  ),
+),
+ SizedBox(height: height * 0.03),
                     BlocBuilder<AuthCubit, AuthStates>(
                       builder: (context, state) {
                         if (state is SignInLoadingStates) {

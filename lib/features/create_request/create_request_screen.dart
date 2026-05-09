@@ -317,7 +317,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
 
                     prefixIcon: Icons.search,
 
-                    fieldType: FieldType.normal,
+                    fieldType: FieldType.normal
                   ),
 
                   SizedBox(height: height * 0.025),
@@ -333,7 +333,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
 
                     prefixIcon: Icons.location_on,
 
-                    fieldType: FieldType.normal,
+                    fieldType: FieldType.normal
                   ),
 
                   SizedBox(height: height * 0.025),
