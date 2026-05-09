@@ -7,7 +7,7 @@ class RequestCard extends StatelessWidget {
   final String bloodType;
   final String distance;
 
-  RequestCard({
+  const RequestCard({
     super.key,
     required this.icon,
     required this.hospitalName,
@@ -20,63 +20,50 @@ class RequestCard extends StatelessWidget {
     return Container(
       width: 280,
       height: 190,
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.only(right: 16),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey.shade300,
-          width: 1,
-        ),
+        border: Border.all(color: Colors.grey.shade300, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                color: ColorsManger.primaryColor,
-              ),
-              SizedBox(width: 8),
+              Icon(icon, color: ColorsManger.primaryColor),
+              const SizedBox(width: 8),
               Text(
                 hospitalName,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16),
-          Text(
+          const SizedBox(height: 16),
+          const Text(
             "Blood Type Needed",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
+            style: TextStyle(color: Colors.grey),
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Text(
             bloodType,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.red,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                distance,
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
+              Text(distance, style: const TextStyle(color: Colors.grey)),
               Container(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 16,
                 ),
@@ -84,7 +71,7 @@ class RequestCard extends StatelessWidget {
                   color: ColorsManger.primaryColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
+                child: const Text(
                   "Donate",
                   style: TextStyle(
                     color: Colors.white,
