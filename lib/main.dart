@@ -13,7 +13,7 @@ import 'features/auth/sign_up/sign_up.dart';
 import 'features/auth/cubit/cubit.dart';
 
 import 'features/home/Cubit/home_cubit.dart';
-import 'features/profile/cubit/profile_cubit.dart'; // ✅ add this
+import 'features/profile/cubit/profile_cubit.dart'; 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
