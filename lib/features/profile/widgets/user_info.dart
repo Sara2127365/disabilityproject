@@ -32,7 +32,12 @@ class UserInfo extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(64),
                         child: state.userModel.image.isEmpty
-                            ? Image.asset('assets/default_image_profile.png')
+                            ? Image.asset(
+                                'assets/default_profile_image.png',
+                                width: 128,
+                                height: 128,
+                                fit: BoxFit.cover,
+                              )
                             : Image.network(
                                 state.userModel.image,
                                 width: 128,
