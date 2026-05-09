@@ -17,14 +17,12 @@ import 'features/auth/sign_up/sign_up.dart';
 import 'features/auth/cubit/cubit.dart';
 
 import 'features/home/Cubit/home_cubit.dart';
-import 'features/profile/cubit/profile_cubit.dart'; 
+import 'features/profile/cubit/profile_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -34,34 +32,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => HomeCubit()..getData(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      home: SplashScreen(),
+
+      routes: {
+        '/onboarding': (context) => const OnboardingScreen(),
+
+        '/signin': (context) => BlocProvider(
+          create: (context) => AuthCubit(),
+          child: const SignInScreen(),
         ),
-        BlocProvider(
-          create: (_) => ProfileCubit()..getUser(), 
+
+        '/signup': (context) => BlocProvider(
+          create: (context) => AuthCubit(),
+          child: const SignUpScreen(),
         ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: const SplashScreen(),
 
-        routes: {
-          '/onboarding': (context) => const OnboardingScreen(),
-
-          '/signin': (context) => BlocProvider(
-                create: (_) => AuthCubit(),
-                child: const SignInScreen(),
-              ),
-
-          '/signup': (context) => BlocProvider(
-                create: (_) => AuthCubit(),
-                child: const SignUpScreen(),
-              ),
-
-        '/home': (context) => const MainNavigation(),
+        '/home': (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => HomeCubit()..getData()),
+            BlocProvider(create: (context) => ProfileCubit()..getUser()),
+          ],
+          child: const MainNavigation(),
+        ),
       },
-    ));
+    );
   }
 }
