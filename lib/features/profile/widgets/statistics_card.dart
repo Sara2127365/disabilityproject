@@ -1,16 +1,17 @@
 import 'package:disability/core/styles/styles.dart';
+import 'package:disability/features/profile/cubit/profile_cubit.dart';
+import 'package:disability/features/profile/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
-  final int recordNumber;
   final String recordName;
   const StatisticsCard({
     super.key,
     required this.icon,
     required this.iconColor,
-    required this.recordNumber,
     required this.recordName,
   });
 
@@ -36,7 +37,21 @@ class StatisticsCard extends StatelessWidget {
             child: Icon(icon, color: iconColor),
           ),
 
-          Text('$recordNumber', style: StylesManager.black24Bold),
+          BlocBuilder<ProfileCubit, ProfileStates>(
+            builder: (context, state) {
+              if (state is ProfileSuccessState) {
+                return Text(
+                  recordName == 'Donations Count'
+                      ? '${state.userModel.donations}'
+                      : recordName == 'Lives Saved'
+                      ? '${state.userModel.livesSaved}'
+                      : '${state.userModel.points}',
+                  style: StylesManager.black24Bold,
+                );
+              }
+              return Container();
+            },
+          ),
           Text(recordName, style: StylesManager.black12Bold),
         ],
       ),

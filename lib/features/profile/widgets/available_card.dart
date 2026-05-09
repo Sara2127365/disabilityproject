@@ -1,16 +1,13 @@
 import 'package:disability/core/styles/colors.dart';
 import 'package:disability/core/styles/styles.dart';
+import 'package:disability/features/profile/cubit/profile_cubit.dart';
+import 'package:disability/features/profile/cubit/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AvailableCard extends StatefulWidget {
+class AvailableCard extends StatelessWidget {
   const AvailableCard({super.key});
 
-  @override
-  State<AvailableCard> createState() => _AvailableCardState();
-}
-
-class _AvailableCardState extends State<AvailableCard> {
-  bool isAvailable = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,13 +23,19 @@ class _AvailableCardState extends State<AvailableCard> {
             style: StylesManager.black12Bold,
           ),
           Spacer(),
-          Switch(
-            value: isAvailable,
-            activeColor: ColorsManger.primaryColor,
-            onChanged: (value) {
-              setState(() {
-                isAvailable = value;
-              });
+          BlocBuilder<ProfileCubit, ProfileStates>(
+            builder: (context, state) {
+              if (state is ProfileSuccessState) {
+                return Switch(
+                  value: state.userModel.isAvailable,
+                  activeColor: ColorsManger.primaryColor,
+                  onChanged: (value) {
+                    
+                    context.read<ProfileCubit>().toggleAvailability(value);
+                  },
+                );
+              }
+              return Container();
             },
           ),
         ],

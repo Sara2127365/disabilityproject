@@ -32,21 +32,18 @@ class ProfileScreen extends StatelessWidget {
                 StatisticsCard(
                   icon: Icons.bloodtype_outlined,
                   iconColor: ColorsManger.primaryColor,
-                  recordNumber: 12,
                   recordName: 'Donations Count',
                 ),
                 SizedBox(height: height * 0.02),
                 StatisticsCard(
                   icon: Icons.favorite_border_outlined,
                   iconColor: Color(0xff006578),
-                  recordNumber: 36,
                   recordName: 'Lives Saved',
                 ),
                 SizedBox(height: height * 0.02),
                 StatisticsCard(
                   icon: Icons.stars_outlined,
                   iconColor: Color(0xff5B403D),
-                  recordNumber: 850,
                   recordName: 'Reward Points',
                 ),
                 SizedBox(height: height * 0.04),
