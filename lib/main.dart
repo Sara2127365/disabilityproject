@@ -13,6 +13,7 @@ import 'features/auth/sign_up/sign_up.dart';
 import 'features/auth/cubit/cubit.dart';
 
 import 'features/home/Cubit/home_cubit.dart';
+import 'features/profile/cubit/profile_cubit.dart'; // ✅ add this
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +32,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-      
         BlocProvider(
           create: (_) => HomeCubit()..getData(),
+        ),
+        BlocProvider(
+          create: (_) => ProfileCubit()..getUser(), 
         ),
       ],
       child: MaterialApp(
