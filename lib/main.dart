@@ -62,6 +62,6 @@ class MyApp extends StatelessWidget {
 
         '/home': (context) => const MainNavigation(),
       },
-    );
+    ));
   }
 }
