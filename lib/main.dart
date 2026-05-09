@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // ✅ GLOBAL HomeCubit (fixes your error)
+      
         BlocProvider(
           create: (_) => HomeCubit()..getData(),
         ),
