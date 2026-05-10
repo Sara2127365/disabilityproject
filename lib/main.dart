@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (context) => HomeCubit()..getData()),
             BlocProvider(create: (context) => ProfileCubit()..getUser()),
+            BlocProvider(create: (context) => AuthCubit()),
           ],
           child: const MainNavigation(),
         ),
