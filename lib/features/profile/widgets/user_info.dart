@@ -26,37 +26,48 @@ class UserInfo extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    alignment: Alignment.bottomRight,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(64),
-                        child: state.userModel.image.isEmpty
-                            ? Image.asset(
-                                'assets/default_profile_image.png',
-                                width: 128,
-                                height: 128,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                state.userModel.image,
-                                width: 128,
-                                height: 128,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
+                      Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(64),
+                            child: state.userModel.image.isEmpty
+                                ? Image.asset(
+                                    'assets/default_profile_image.png',
+                                    width: 128,
+                                    height: 128,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    state.userModel.image,
+                                    width: 128,
+                                    height: 128,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
 
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 4),
-                          borderRadius: BorderRadius.circular(35),
-                          color: ColorsManger.primaryColor,
-                        ),
-                        child: Text(
-                          state.userModel.blood,
-                          style: StylesManager.white20Bold,
-                        ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 4),
+                              borderRadius: BorderRadius.circular(35),
+                              color: ColorsManger.primaryColor,
+                            ),
+                            child: Text(
+                              state.userModel.blood,
+                              style: StylesManager.white20Bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          context.read<ProfileCubit>().pickAndUploadImage();
+                        },
+                        icon: Icon(Icons.camera_alt_outlined),
                       ),
                     ],
                   ),

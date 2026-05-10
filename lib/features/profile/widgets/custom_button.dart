@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final IconData icon;
   final String title;
-  const CustomButton({super.key, required this.icon, required this.title});
+  final Function() onTap;
+  const CustomButton({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,7 @@ class CustomButton extends StatelessWidget {
       ),
 
       child: GestureDetector(
-        onTap: () {},
+        onTap: onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -48,9 +48,14 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: height * 0.04),
 
-                CustomButton(icon: Icons.edit_outlined, title: 'Edit Profile'),
+                CustomButton(
+                  onTap: () {},
+                  icon: Icons.edit_outlined,
+                  title: 'Edit Profile',
+                ),
                 SizedBox(height: height * 0.02),
                 CustomButton(
+                  onTap: () {},
                   icon: Icons.share_outlined,
                   title: 'Share Profile',
                 ),

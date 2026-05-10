@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:disability/core/datasources/firebase_data_sources.dart';
 import 'package:disability/features/auth/user_model/user_model.dart';
 import 'package:disability/features/profile/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileCubit extends Cubit<ProfileStates> {
   FirebaseDataSource firebaseDataSource = FirebaseDataSource();
@@ -26,5 +29,27 @@ class ProfileCubit extends Cubit<ProfileStates> {
     await firebaseDataSource.updateAvailability(value);
 
     emit(ProfileSuccessState(userModel: userModel!));
+  }
+
+  Future<void> pickAndUploadImage() async {
+    try {
+      final pickedImage = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+      );
+
+      if (pickedImage == null) return;
+
+      emit(ProfileLoadingState());
+
+      final file = File(pickedImage.path);
+
+      final imageUrl = await firebaseDataSource.uploadProfileImage(file);
+
+      userModel = userModel!.copyWith(image: imageUrl);
+
+      emit(ProfileSuccessState(userModel: userModel!));
+    } catch (e) {
+      emit(ProfileErrorState(message: e.toString()));
+    }
   }
 }
