@@ -8,6 +8,7 @@ class ActiveDonorsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,10 +21,10 @@ class ActiveDonorsSection extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         SizedBox(
-          height: 80,
+          height: height * 0.1,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children:  [
+            children: [
               CircleImageWidget(imagePath: 'assets/Davide.png'),
               SizedBox(width: 70),
               CircleImageWidget(imagePath: 'assets/Sara.png'),
@@ -48,10 +49,7 @@ class ActiveDonorsSection extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: ColorsManger.primaryColor,
-                border: Border.all(
-                  color: ColorsManger.primaryColor,
-                  width: 2,
-                ),
+                border: Border.all(color: ColorsManger.primaryColor, width: 2),
               ),
               child: const Center(
                 child: Icon(Icons.add, color: Colors.white, size: 28),

@@ -12,10 +12,10 @@ class NearbyRequestsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -26,7 +26,6 @@ class NearbyRequestsSection extends StatelessWidget {
 
         const SizedBox(height: 12),
 
-       
         BlocBuilder<HomeCubit, HomeStates>(
           builder: (context, state) {
             if (state is HomeLoadingState) {
@@ -45,7 +44,7 @@ class NearbyRequestsSection extends StatelessWidget {
               }
 
               return SizedBox(
-                height: 190,
+                height: height * 0.25,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: requests.length,

@@ -9,7 +9,7 @@ class UrgentBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 180,
+
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: ColorsManger.primaryColor,
