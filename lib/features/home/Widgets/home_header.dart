@@ -29,7 +29,7 @@ class HomeHeader extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
 
                       child: Image.asset(
-                        'default_profile_image.png',
+                        'assets/default_profile_image.png',
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,

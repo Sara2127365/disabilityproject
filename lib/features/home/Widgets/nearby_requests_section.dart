@@ -7,8 +7,19 @@ import 'package:disability/features/Donation_card/donation_card.dart';
 import 'package:disability/core/styles/styles.dart';
 import 'package:disability/core/styles/colors.dart';
 
-class NearbyRequestsSection extends StatelessWidget {
+class NearbyRequestsSection extends StatefulWidget {
   const NearbyRequestsSection({super.key});
+
+  @override
+  State<NearbyRequestsSection> createState() => _NearbyRequestsSectionState();
+}
+
+class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
+  @override
+  void initState() {
+    context.read<HomeCubit>().getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

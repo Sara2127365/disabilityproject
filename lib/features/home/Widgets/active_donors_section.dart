@@ -1,10 +1,24 @@
+import 'package:disability/features/home/Cubit/home_cubit.dart';
+import 'package:disability/features/home/Cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:disability/core/styles/colors.dart';
 import 'package:disability/core/styles/styles.dart';
 import 'package:disability/features/Donors/Donors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ActiveDonorsSection extends StatelessWidget {
+class ActiveDonorsSection extends StatefulWidget {
   const ActiveDonorsSection({super.key});
+
+  @override
+  State<ActiveDonorsSection> createState() => _ActiveDonorsSectionState();
+}
+
+class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
+  @override
+  void initState() {
+    context.read<HomeCubit>().getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +35,42 @@ class ActiveDonorsSection extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         SizedBox(
-          height: height * 0.1,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              CircleImageWidget(imagePath: 'assets/Davide.png'),
-              SizedBox(width: 70),
-              CircleImageWidget(imagePath: 'assets/Sara.png'),
-              SizedBox(width: 70),
-              CircleImageWidget(imagePath: 'assets/Michle.png'),
-              SizedBox(width: 70),
-              CircleImageWidget(imagePath: 'assets/Elena.png'),
-              SizedBox(width: 70),
-              CircleImageWidget(imagePath: 'assets/Davide.png'),
-              SizedBox(width: 70),
-              CircleImageWidget(imagePath: 'assets/Sara.png'),
-            ],
+          height: height * 0.11,
+          child: BlocBuilder<HomeCubit, HomeStates>(
+            builder: (context, state) {
+              if (state is HomeSuccessState) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.activeUsers.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: state.activeUsers[index].image.isEmpty
+                              ? Image.asset(
+                                  'default_profile_image.png',
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  state.activeUsers[index].image,
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                        Text(state.activeUsers[index].name),
+                      ],
+                    );
+                  },
+                );
+              } else if (state is HomeLoadingState) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return Container();
+            },
           ),
         ),
         const SizedBox(height: 10),

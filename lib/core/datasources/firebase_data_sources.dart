@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:disability/features/home/Model/request_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../features/auth/user_model/user_model.dart';
@@ -90,7 +91,27 @@ class FirebaseDataSource {
     return imageUrl;
   }
 
-  
+  Future<List<UserModel>> getActiveUsers() async {
+    final currentUid = _auth.currentUser!.uid;
+
+    final querySnapshot = await _firestore
+        .collection('users')
+        .where('isAvailable', isEqualTo: true)
+        .get();
+
+    return querySnapshot.docs
+        .where((doc) => doc.id != currentUid)
+        .map((doc) => UserModel.fromJson(doc.data()))
+        .toList();
+  }
+
+  Future<List<RequestModel>> getRequests() async {
+    final snapshot = await _firestore.collection('requests').get();
+
+    return snapshot.docs
+        .map((doc) => RequestModel.fromMap(doc.data()))
+        .toList();
+  }
 
   Future<void> logout() async {
     await _auth.signOut();
