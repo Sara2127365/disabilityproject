@@ -64,8 +64,5 @@ class NotificationsCubit extends Cubit<NotificationsStates> {
   }
 
 
-  Future<void> markAsRead(String notificationId) async {
-    await _fcmService.markAsRead(notificationId);
-    emit(MarkAsReadSuccessState());
-  }
+
 }

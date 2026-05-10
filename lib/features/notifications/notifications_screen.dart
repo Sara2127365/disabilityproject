@@ -27,6 +27,7 @@ class NotificationsScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<NotificationsCubit, NotificationsStates>(
                 builder: (context, state) {
+
                   if (state is NotificationsLoadingState) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -47,9 +48,7 @@ class NotificationsScreen extends StatelessWidget {
                           Text(
                             state.message,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.red,
-                            ),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ],
                       ),
@@ -72,9 +71,7 @@ class NotificationsScreen extends StatelessWidget {
                             SizedBox(height: 12),
                             Text(
                               'No notifications yet',
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
+                              style: TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -86,22 +83,15 @@ class NotificationsScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final notification = notifications[index];
 
-                        return GestureDetector(
-                          onTap: () {
-                            context
-                                .read<NotificationsCubit>()
-                                .markAsRead(notification.id);
-                          },
-                          child: NotificationCard(
-                            title: notification.title,
-                            body: notification.body,
-                            time: _formatTime(notification.createdAt),
-                            icon: _getIconForType(notification.type),
-                            cardColor: notification.isRead
-                                ? Colors.white
-                                : const Color(0xFFFFF3F3),
-                            isUnread: !notification.isRead,
-                          ),
+                        return NotificationCard(
+                          title: notification.title,
+                          body: notification.body,
+                          time: _formatTime(notification.createdAt),
+                          icon: _getIconForType(notification.type),
+                          cardColor: notification.isRead
+                              ? Colors.white
+                              : const Color(0xFFFFF3F3),
+                          isUnread: !notification.isRead,
                         );
                       },
                     );
@@ -158,17 +148,9 @@ class NotificationsScreen extends StatelessWidget {
     final now = DateTime.now();
     final diff = now.difference(date);
 
-    if (diff.inMinutes < 1) {
-      return 'Just now';
-    }
-
-    if (diff.inMinutes < 60) {
-      return '${diff.inMinutes} min ago';
-    }
-
-    if (diff.inHours < 24) {
-      return '${diff.inHours}h ago';
-    }
+    if (diff.inMinutes < 1) return 'Just now';
+    if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
 
     return '${diff.inDays}d ago';
   }
