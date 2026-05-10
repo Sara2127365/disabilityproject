@@ -1,6 +1,6 @@
 import 'package:disability/features/auth/cubit/cubit.dart';
 import 'package:disability/features/auth/cubit/states.dart';
-import 'package:disability/features/auth/widgets/forget_password.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -106,20 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
 
                     SizedBox(height: height * 0.03),
-                    Align(
-  alignment: Alignment.centerRight,
-  child: TextButton(
-    onPressed: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ForgotPasswordScreen(),
-        ),
-      );
-    },
-    child: const Text("Forgot Password?",style: TextStyle(color: Color(0xFFB7131A)),),
-  ),
-),
+                   
  SizedBox(height: height * 0.03),
                     BlocBuilder<AuthCubit, AuthStates>(
                       builder: (context, state) {

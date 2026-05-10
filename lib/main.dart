@@ -1,8 +1,11 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:disability/features/auth/sign_in/sign_in.dart';
+import 'package:disability/features/auth/widgets/forget_password.dart';
 import 'package:disability/features/create_request/create_request_screen.dart';
 import 'package:disability/features/main_navigation/main_navigation.dart';
 import 'package:disability/features/nearby_donors/nearby_donors_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +30,9 @@ Future<void> main() async {
 
   await FCMService().init();
 
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(enabled: !kReleaseMode, builder: (context) => const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,6 +41,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+
       debugShowCheckedModeBanner: false,
 
       home: SplashScreen(),
@@ -52,12 +61,15 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthCubit(),
           child: const SignUpScreen(),
         ),
+         '/forgotPassword': (context) => BlocProvider(
+    create: (context) => AuthCubit(),
+    child: ForgotPasswordScreen(),
+  ),
 
         '/home': (context) => MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => HomeCubit()..getData()),
             BlocProvider(create: (context) => ProfileCubit()..getUser()),
-            BlocProvider(create: (context) => AuthCubit()),
           ],
           child: const MainNavigation(),
         ),
