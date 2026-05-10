@@ -1,8 +1,11 @@
 import 'package:disability/core/styles/colors.dart';
 import 'package:disability/core/styles/styles.dart';
+import 'package:disability/features/profile/cubit/profile_cubit.dart';
+import 'package:disability/features/profile/cubit/states.dart';
 import 'package:disability/features/profile/widgets/line_divider.dart';
 import 'package:disability/features/profile/widgets/medical_info_record.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MedicalInformationSection extends StatelessWidget {
   const MedicalInformationSection({super.key});
@@ -24,29 +27,47 @@ class MedicalInformationSection extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
-              children: [
-                MedicalInfoRecord(
-                  title: 'Last Donation',
-                  value: 'Oct 24, 2023',
-                  valueColor: Color(0xff271716),
-                ),
-                LineDivider(),
-                MedicalInfoRecord(
-                  title: 'Eligibility',
-                  value: 'Eligible Now',
-                  valueColor: Color(0xff006578),
-                  icon: Icons.check_circle_outline,
-                ),
-                LineDivider(),
+            child: BlocBuilder<ProfileCubit, ProfileStates>(
+              builder: (context, state) {
+                final myCubit = context.read<ProfileCubit>();
+                if (state is ProfileSuccessState) {
+                  return Column(
+                    children: [
+                      MedicalInfoRecord(
+                        title: 'Last Donation',
+                        value: state.userModel.lastDonationDate == null
+                            ? '________'
+                            : state.userModel.lastDonationDate.toString().split(
+                                ' ',
+                              )[0],
+                        valueColor: Color(0xff271716),
+                      ),
+                      LineDivider(),
+                      MedicalInfoRecord(
+                        title: 'Eligibility',
+                        value: myCubit.isEligible()
+                            ? 'Eligible Now'
+                            : 'Not Eligible',
+                        valueColor: myCubit.isEligible()
+                            ? ColorsManger.primaryColor
+                            : Color(0xff006578),
+                        icon: myCubit.isEligible()
+                            ? Icons.check_circle_outline
+                            : Icons.close,
+                      ),
+                      LineDivider(),
 
-                MedicalInfoRecord(
-                  title: 'Health Record',
-                  value: 'View Records',
-                  valueColor: ColorsManger.primaryColor,
-                  icon: Icons.open_in_new,
-                ),
-              ],
+                      MedicalInfoRecord(
+                        title: 'Health Record',
+                        value: 'View Records',
+                        valueColor: Color(0xff271716),
+                        icon: Icons.open_in_new,
+                      ),
+                    ],
+                  );
+                }
+                return Container();
+              },
             ),
           ),
         ],

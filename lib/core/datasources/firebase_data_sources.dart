@@ -90,6 +90,8 @@ class FirebaseDataSource {
     return imageUrl;
   }
 
+  
+
   Future<void> logout() async {
     await _auth.signOut();
   }

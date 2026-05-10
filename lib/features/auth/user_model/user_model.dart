@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   final String email;
   final String name;
@@ -9,6 +11,7 @@ class UserModel {
   final int points;
   final int livesSaved;
   final bool isAvailable;
+  final DateTime? lastDonationDate;
 
   UserModel({
     required this.email,
@@ -21,6 +24,7 @@ class UserModel {
     required this.points,
     required this.livesSaved,
     required this.isAvailable,
+    this.lastDonationDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -35,6 +39,7 @@ class UserModel {
       'points': points,
       'livesSaved': livesSaved,
       'isAvailable': isAvailable,
+      'lastDonationDate': lastDonationDate,
     };
   }
 
@@ -50,6 +55,9 @@ class UserModel {
       points: json['points'],
       livesSaved: json['livesSaved'],
       isAvailable: json['isAvailable'],
+      lastDonationDate: json['lastDonationDate'] != null
+          ? (json['lastDonationDate'] as Timestamp).toDate()
+          : null,
     );
   }
 
@@ -64,6 +72,7 @@ class UserModel {
     int? donations,
     int? points,
     int? livesSaved,
+    DateTime? lastDonationDate,
   }) {
     return UserModel(
       email: email ?? this.email,
@@ -76,6 +85,7 @@ class UserModel {
       points: points ?? this.points,
       livesSaved: livesSaved ?? this.livesSaved,
       isAvailable: isAvailable ?? this.isAvailable,
+      lastDonationDate: lastDonationDate ?? this.lastDonationDate,
     );
   }
 }

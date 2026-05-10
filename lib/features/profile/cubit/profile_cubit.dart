@@ -52,4 +52,14 @@ class ProfileCubit extends Cubit<ProfileStates> {
       emit(ProfileErrorState(message: e.toString()));
     }
   }
+
+  bool isEligible() {
+    if (userModel?.lastDonationDate == null) {
+      return true;
+    }
+
+    final days = DateTime.now().difference(userModel!.lastDonationDate!).inDays;
+
+    return days >= 90;
+  }
 }
