@@ -10,6 +10,7 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return BlocBuilder<ProfileCubit, ProfileStates>(
       builder: (context, state) {
         if (state is ProfileSuccessState) {
@@ -35,7 +36,7 @@ class HomeHeader extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-              const SizedBox(width: 20),
+              SizedBox(width: 0.03 * width),
               Expanded(
                 child: Text(
                   'Hello, ${state.userModel.name.split(' ')[0]}',

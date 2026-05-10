@@ -35,7 +35,7 @@ class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
           ],
         ),
 
-        const SizedBox(height: 12),
+        SizedBox(height: height * 0.02),
 
         BlocBuilder<HomeCubit, HomeStates>(
           builder: (context, state) {

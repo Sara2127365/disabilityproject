@@ -33,9 +33,9 @@ class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
             Text('See Map', style: StylesManager.titleText18StylePrimry),
           ],
         ),
-        const SizedBox(height: 15),
+        SizedBox(height: height * 0.01),
         SizedBox(
-          height: height * 0.11,
+          height: height * 0.15,
           child: BlocBuilder<HomeCubit, HomeStates>(
             builder: (context, state) {
               if (state is HomeSuccessState) {
@@ -73,7 +73,7 @@ class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
             },
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: height * 0.01),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

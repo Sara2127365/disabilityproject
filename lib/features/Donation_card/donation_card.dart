@@ -17,9 +17,11 @@ class RequestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Container(
-      width: 280,
-      height: 190,
+      width: width * 0.7,
+      height: height * 0.8,
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
@@ -28,12 +30,13 @@ class RequestCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade300, width: 1),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Icon(icon, color: ColorsManger.primaryColor),
-              const SizedBox(width: 8),
+              SizedBox(width: width * 0.02),
               Text(
                 hospitalName,
                 style: const TextStyle(
@@ -43,12 +46,9 @@ class RequestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          const Text(
-            "Blood Type Needed",
-            style: TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(height: 6),
+
+          const Text("Blood Type Needed", style: TextStyle(color: Colors.grey)),
+
           Text(
             bloodType,
             style: const TextStyle(
@@ -57,7 +57,7 @@ class RequestCard extends StatelessWidget {
               color: Colors.red,
             ),
           ),
-          const Spacer(),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
