@@ -49,7 +49,7 @@ class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
                           borderRadius: BorderRadius.circular(30),
                           child: state.activeUsers[index].image.isEmpty
                               ? Image.asset(
-                                  'default_profile_image.png',
+                                  'assets/default_profile_image.png',
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,
