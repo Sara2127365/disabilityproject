@@ -61,10 +61,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthCubit(),
           child: const SignUpScreen(),
         ),
-         '/forgotPassword': (context) => BlocProvider(
-    create: (context) => AuthCubit(),
-    child: ForgotPasswordScreen(),
-  ),
+         
 
         '/home': (context) => MultiBlocProvider(
           providers: [
