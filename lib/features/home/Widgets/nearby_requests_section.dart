@@ -5,25 +5,31 @@ import '../Cubit/home_cubit.dart';
 import '../Cubit/states.dart';
 import 'package:disability/features/home/Donation_card/donation_card.dart';
 import 'package:disability/core/styles/styles.dart';
-import 'package:disability/core/styles/colors.dart';
 
 class NearbyRequestsSection extends StatefulWidget {
-  const NearbyRequestsSection({super.key});
+  final String searchText;
+
+  NearbyRequestsSection({
+    super.key,
+    required this.searchText,
+  });
 
   @override
-  State<NearbyRequestsSection> createState() => _NearbyRequestsSectionState();
+  State<NearbyRequestsSection> createState() =>
+      _NearbyRequestsSectionState();
 }
 
 class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
   @override
   void initState() {
-    context.read<HomeCubit>().getData();
     super.initState();
+    context.read<HomeCubit>().getData();
   }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -40,7 +46,7 @@ class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
         BlocBuilder<HomeCubit, HomeStates>(
           builder: (context, state) {
             if (state is HomeLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator());
             }
 
             if (state is HomeErrorState) {
@@ -48,10 +54,22 @@ class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
             }
 
             if (state is HomeSuccessState) {
-              final requests = state.requests;
+              final query = widget.searchText.toLowerCase();
+
+              final requests = state.requests.where((r) {
+                final hospital = (r.hospital ?? "").toLowerCase();
+                final location = (r.location ?? "").toLowerCase();
+                final bloodType = (r.bloodType ?? "").toLowerCase();
+
+                return hospital.contains(query) ||
+                    location.contains(query) ||
+                    bloodType.contains(query);
+              }).toList();
 
               if (requests.isEmpty) {
-                return const Center(child: Text('No requests found.'));
+                return Center(
+                  child: Text("No matching requests found."),
+                );
               }
 
               return SizedBox(
@@ -61,18 +79,19 @@ class _NearbyRequestsSectionState extends State<NearbyRequestsSection> {
                   itemCount: requests.length,
                   itemBuilder: (context, index) {
                     final r = requests[index];
+
                     return RequestCard(
                       icon: Icons.local_hospital,
-                      hospitalName: r.hospital,
-                      bloodType: r.bloodType,
-                      distance: r.location,
+                      hospitalName: r.hospital ?? "",
+                      bloodType: r.bloodType ?? "",
+                      distance: r.location ?? "",
                     );
                   },
                 ),
               );
             }
 
-            return const SizedBox.shrink();
+            return SizedBox.shrink();
           },
         ),
       ],

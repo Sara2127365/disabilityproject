@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SearchSection extends StatelessWidget {
-  const SearchSection({super.key});
+  final Function(String) onChanged;
+
+  const SearchSection({
+    super.key,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,24 +14,25 @@ class SearchSection extends StatelessWidget {
       children: [
         Expanded(
           child: TextField(
+            onChanged: onChanged,
             decoration: InputDecoration(
               hintText: "Search hospitals or locations...",
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon:  Icon(Icons.search),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(
+              contentPadding:  EdgeInsets.symmetric(
                 vertical: 14,
                 horizontal: 16,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
-        const Icon(Icons.tune),
+       SizedBox(width: 12),
+       Icon(Icons.tune),
       ],
     );
   }
