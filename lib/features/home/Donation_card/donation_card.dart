@@ -1,7 +1,8 @@
 import 'package:disability/core/styles/colors.dart';
 import 'package:disability/features/Hospital_screen/HospitalScreen.dart';
+import 'package:disability/features/profile/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestCard extends StatelessWidget {
   final IconData icon;
@@ -42,17 +43,11 @@ class RequestCard extends StatelessWidget {
               SizedBox(width: width * 0.02),
               Text(
                 hospitalName,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
           ),
-          Text(
-            "Blood Type Needed",
-            style: TextStyle(color: Colors.grey),
-          ),
+          Text("Blood Type Needed", style: TextStyle(color: Colors.grey)),
           Text(
             bloodType,
             style: TextStyle(
@@ -70,19 +65,19 @@ class RequestCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HospitalScreen(
-                        hospitalName: hospitalName,
-                        bloodType: bloodType,
-                        location: distance,
+                      builder: (context) => BlocProvider(
+                        create: (context) => ProfileCubit(),
+                        child: HospitalScreen(
+                          hospitalName: hospitalName,
+                          bloodType: bloodType,
+                          location: distance,
+                        ),
                       ),
                     ),
                   );
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 16,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   decoration: BoxDecoration(
                     color: ColorsManger.primaryColor,
                     borderRadius: BorderRadius.circular(10),

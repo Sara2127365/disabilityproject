@@ -113,6 +113,21 @@ class FirebaseDataSource {
         .toList();
   }
 
+  Future<void> updateUserStats({
+    required int points,
+    required int livesSaved,
+    required int donations,
+  }) async {
+    final uid = _auth.currentUser!.uid;
+
+    await _firestore.collection('users').doc(uid).update({
+      'points': FieldValue.increment(points),
+      'livesSaved': FieldValue.increment(livesSaved),
+      'donations': FieldValue.increment(donations),
+      'lastDonationDate': DateTime.now(),
+    });
+  }
+
   Future<void> logout() async {
     await _auth.signOut();
   }

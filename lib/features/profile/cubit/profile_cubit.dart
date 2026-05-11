@@ -31,6 +31,24 @@ class ProfileCubit extends Cubit<ProfileStates> {
     emit(ProfileSuccessState(userModel: userModel!));
   }
 
+  Future<void> donateBlood() async {
+    emit(ProfileLoadingState());
+
+    try {
+      await firebaseDataSource.updateUserStats(
+        points: 10,
+        livesSaved: 1,
+        donations: 1,
+      );
+
+      userModel = await firebaseDataSource.getUser();
+
+      emit(ProfileSuccessState(userModel: userModel!));
+    } catch (e) {
+      emit(ProfileErrorState(message: e.toString()));
+    }
+  }
+
   Future<void> pickAndUploadImage() async {
     try {
       final pickedImage = await ImagePicker().pickImage(

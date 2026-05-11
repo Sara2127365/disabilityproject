@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
 
         '/home': (context) => MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => HomeCubit()..getData()),
+            BlocProvider(create: (context) => HomeCubit()),
             BlocProvider(create: (context) => ProfileCubit()..getUser()),
             BlocProvider(create: (context) => AuthCubit()),
           ],
