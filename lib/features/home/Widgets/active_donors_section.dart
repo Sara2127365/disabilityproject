@@ -22,6 +22,7 @@ class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +40,10 @@ class _ActiveDonorsSectionState extends State<ActiveDonorsSection> {
           child: BlocBuilder<HomeCubit, HomeStates>(
             builder: (context, state) {
               if (state is HomeSuccessState) {
-                return ListView.builder(
+                return ListView.separated(
+                  separatorBuilder: (context, index) {
+                    return SizedBox(width: width * 0.05);
+                  },
                   scrollDirection: Axis.horizontal,
                   itemCount: state.activeUsers.length,
                   itemBuilder: (context, index) {
