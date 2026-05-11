@@ -1,5 +1,7 @@
 import 'package:disability/core/styles/colors.dart';
+import 'package:disability/features/Hospital_screen/HospitalScreen.dart';
 import 'package:flutter/material.dart';
+
 
 class RequestCard extends StatelessWidget {
   final IconData icon;
@@ -7,7 +9,7 @@ class RequestCard extends StatelessWidget {
   final String bloodType;
   final String distance;
 
-  const RequestCard({
+  RequestCard({
     super.key,
     required this.icon,
     required this.hospitalName,
@@ -19,11 +21,12 @@ class RequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     return Container(
       width: width * 0.7,
       height: height * 0.8,
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.only(right: 16),
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -39,43 +42,57 @@ class RequestCard extends StatelessWidget {
               SizedBox(width: width * 0.02),
               Text(
                 hospitalName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
             ],
           ),
-
-          const Text("Blood Type Needed", style: TextStyle(color: Colors.grey)),
-
+          Text(
+            "Blood Type Needed",
+            style: TextStyle(color: Colors.grey),
+          ),
           Text(
             bloodType,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.red,
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(distance, style: const TextStyle(color: Colors.grey)),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: ColorsManger.primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Text(
-                  "Donate",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              Text(distance, style: TextStyle(color: Colors.grey)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HospitalScreen(
+                        hospitalName: hospitalName,
+                        bloodType: bloodType,
+                        location: distance,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 16,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ColorsManger.primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    "Donate",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
