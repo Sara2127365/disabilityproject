@@ -2,6 +2,7 @@ import 'package:disability/core/styles/colors.dart';
 import 'package:disability/core/styles/styles.dart';
 import 'package:disability/features/profile/cubit/profile_cubit.dart';
 import 'package:disability/features/profile/cubit/states.dart';
+import 'package:disability/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,6 +72,7 @@ class HospitalScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       context.read<ProfileCubit>().donateBlood();
+                      context.read<ProfileCubit>().getUser();
                     },
                     child: state is ProfileLoadingState
                         ? CircularProgressIndicator(color: Colors.white)

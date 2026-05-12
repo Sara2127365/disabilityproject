@@ -94,14 +94,33 @@ class FirebaseDataSource {
   Future<List<UserModel>> getActiveUsers() async {
     final currentUid = _auth.currentUser!.uid;
 
+    final eligibleDate = DateTime.now().subtract(Duration(days: 90));
+
     final querySnapshot = await _firestore
         .collection('users')
         .where('isAvailable', isEqualTo: true)
         .get();
 
     return querySnapshot.docs
-        .where((doc) => doc.id != currentUid)
-        .map((doc) => UserModel.fromJson(doc.data()))
+        .where((doc) {
+          // exclude current user
+          if (doc.id == currentUid) {
+            return false;
+          }
+
+          final user = UserModel.fromJson(doc.data());
+
+          // لو null -> يظهر
+          if (user.lastDonationDate == null) {
+            return true;
+          }
+
+          // لو آخر تبرع من 90 يوم أو أكتر
+          return user.lastDonationDate!.isBefore(eligibleDate);
+        })
+        .map((doc) {
+          return UserModel.fromJson(doc.data());
+        })
         .toList();
   }
 
